@@ -108,4 +108,9 @@ Machine learning models can only work with numerical values, hence we shall conv
 
 These features are `Sex`, `Embarked`
 
+| Features | Description |
+|---|---|
+|`Sex`| 1 = Male, 0 = Female|
+|`Embarked`|
+
 **insert table explaining how sex n embarked are label encoded** (maybe add embarked value counts into kaggle, to see how it's broken down)
