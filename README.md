@@ -42,6 +42,10 @@ Here's a preview of the first 10 rows of the training dataset:
 ![train dataset head](https://github.com/justin-97/Titanic-Project/blob/main/Images/traindatasethead.jpg)
 
 ## Exploratory Data Analysis
+First step, is to understand what the training data consists of. This is done by calling the `train_data.infdo()`. It can be seen below that the Dtype of the variables ranges from int64, object, and float64.
+
+![train data info]()
+
 At a first glance of `train_data`, there appears to be missing values in 3 features:
  1) `Age`: 177 missing values.
  2) `Cabin`: 687 missing values.
@@ -54,4 +58,17 @@ A potential way we could deal with this missing values would be:
 
 #### 1) Age
 Digging deeper into the `Age` variable, a boxplot was used to illustrate the distribution of ages of all passengers.
+
+**insert ages boxplot**
+
+**insert histogram**
+
+**Determining Interquartile Range (IQR) & no. of Outliers**
+
+The IQR was determined by subtracting the 75th percentile and 25th percentile. The upper and lower limits were then calculated using the IQR value. Any values outside of these limits i.e. below the lower limit and/or above the upper limit shall be deemed outliers. It was determined that there were only 11 outliers in the `Age`.
+
+We can leave these 11 passengers in, while we aggregate the `Age` mean of all passengers. This was determined as ***29.7*** years old. Lastly, we shall replace all missing values in the `Age` variable with 29.7.
+
+#### 2) Cabin
+Earlier, the `Cabin` column values were inconsistent. Cabins were assigned with a Letter, ranging from (A-H or T), followed with 1-3 numbers, indicating the room number.
 
