@@ -42,33 +42,70 @@ Here's a preview of the first 10 rows of the training dataset:
 ![train dataset head](https://github.com/justin-97/Titanic-Project/blob/main/Images/traindatasethead.jpg)
 
 ## Exploratory Data Analysis
-First step, is to understand what the training data consists of. This is done by calling the `train_data.infdo()`. It can be seen below that the Dtype of the variables ranges from int64, object, and float64.
+First step, is to understand what the training data consists of. This is done by calling the `train_data.info()`. It can be seen below that the Dtype of the variables ranges from int64, object, and float64.
 
-![train data info]()
+![train data info](https://github.com/justin-97/Titanic-Project/blob/main/Images/traindatainfo.jpg)
+
+### Missing Values
 
 At a first glance of `train_data`, there appears to be missing values in 3 features:
- 1) `Age`: 177 missing values.
- 2) `Cabin`: 687 missing values.
- 3) `Embarked`: 2 missing values.
+ |Feature| No. of missing values |
+ |:---|:---|
+ | `Age` | 177 |
+ | `Cabin` | 687 |
+ | `Embarked`| 2 |
 
 A potential way we could deal with this missing values would be:
- 1) `Age`: Replace the missing values with the aggregated mean ages of the total passengers.
- 2) `Cabin`: Split `Cabin` into categorial values, group the missing values to an assigned term e.g. *'X'*
- 3) `Embarked`: Considering we are using Ensemble Learning models (which are robust to outliers & missing values), we could just leave the missing values. 2 out of 891 is considered pretty insignificant.
+
+| Features | Solution |
+| :-------- | -------- |
+|  `Age`  | Replace the missing values with the aggregated mean ages of the total passengers. |
+| `Cabin` | Split `Cabin` into categorial values, group the missing values to an assigned term e.g. *'X'* |
+| `Embarked` | Since we are using Ensemble Learning models (which are robust to outliers & missing values), we'll leave the missing values. 2 out of 891 is considered **pretty insignificant**. |
+
 
 #### 1) Age
-Digging deeper into the `Age` variable, a boxplot was used to illustrate the distribution of ages of all passengers.
+Digging deeper into the `Age` variable, a boxplot & histogram were used to illustrate the distribution of ages of all passengers.
 
-**insert ages boxplot**
-
-**insert histogram**
+| Boxplot | Histogram |
+:---: | :---:
+![age boxplot](https://github.com/justin-97/Titanic-Project/blob/main/Images/ageboxplot.jpg) | ![age hist](https://github.com/justin-97/Titanic-Project/blob/main/Images/agehist.jpg)
 
 **Determining Interquartile Range (IQR) & no. of Outliers**
 
-The IQR was determined by subtracting the 75th percentile and 25th percentile. The upper and lower limits were then calculated using the IQR value. Any values outside of these limits i.e. below the lower limit and/or above the upper limit shall be deemed outliers. It was determined that there were only 11 outliers in the `Age`.
+| Unknowns | Equations |
+|---|---|
+| IQR | 75th percentile - 25th percentile |
+| Lower Limit | 25th percentile - 1.5 * IQR |
+| Upper Limit | 75th percentile + 1.5* IQR |
 
-We can leave these 11 passengers in, while we aggregate the `Age` mean of all passengers. This was determined as ***29.7*** years old. Lastly, we shall replace all missing values in the `Age` variable with 29.7.
+Above describes how the IQR, Lower & Upper Limits were determined. Any values outside of these limits i.e. below the lower limit and/or above the upper limit shall be deemed outliers. It was determined that there were only <ins>11 outliers</ins>.
+
+We shall leave these 11 passengers in, while we aggregate the `Age` mean of all passengers. This was determined as <ins>**29.7** years old</ins>. Lastly, we shall replace all missing values in the `Age` column with this value.
 
 #### 2) Cabin
-Earlier, the `Cabin` column values were inconsistent. Cabins were assigned with a Letter, ranging from (A-H or T), followed with 1-3 numbers, indicating the room number.
+Earlier, the `Cabin` column values were inconsistent. Cabins were assigned with a Letter, ranging from (A-H or T), followed with 1-3 numbers, indicating the room number. Furthermore, it was mentioned that the dtypes in the `Cabin` column were object. 
 
+Below shows a snapshot of the `value_counts()` of the `Cabin` column.
+
+![cabin value counts](https://github.com/justin-97/Titanic-Project/blob/main/Images/cabinvaluecounts.jpg)
+
+Let's simplify this feature by <ins>**extracting the first letter of the cabins, then convert them into categorical variables.**</ins> Afterwards, these values were placed into a new column called `CabinProcessed`.
+
+Pictures of the titanic levels found online, show that the lifeboats are on the sundeck, which is the highest level of the ship. This means that cabins on the higher floor have better access to them, increasing the likelihood of surviving. Therefore, I've added hierarchy to the category.
+
+![titanic deck levels](https://github.com/justin-97/Titanic-Project/blob/main/Images/titanic%20deck%20levels.jpg)
+
+The order of the cabins were assigned as: ***A, B, C, D, E, F, G, H, T, X***.
+
+X is assigned as the lowest because it's difficult to assume which level they might be at during the accident.
+
+*Source:* https://rmstitanic1912.weebly.com/the-levels-of-the-titanic.html
+
+### LabelEncoding Features
+
+Machine learning models can only work with numerical values, hence we shall convert the remaining features that are are interested in, into numerical dtypes. 
+
+These features are `Sex`, `Embarked`
+
+**insert table explaining how sex n embarked are label encoded** (maybe add embarked value counts into kaggle, to see how it's broken down)
