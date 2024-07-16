@@ -31,5 +31,9 @@ The challenge is to build a predictive model that answers the question: "what so
 ## Data Overview
 - The ***train.csv*** training dataset contains, 891 rows and 12 columns.
 - The target variable is `Survived`, while the other variables are features.
+  
+Below shows a snapshot of the Data Dictionary, explain what each variables are:
 
-- 
+![data_dictionary](https://github.com/justin-97/Titanic-Project/blob/main/Images/datadictionary.jpg)
+
+
