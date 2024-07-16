@@ -29,11 +29,29 @@ While there was some element of luck involved in surviving, it seems some groups
 The challenge is to build a predictive model that answers the question: "what sorts of people were most likely to survive?" using passenger data (i.e. name, gender, socio-economic class, etc).
 
 ## Data Overview
-- The ***train.csv*** training dataset contains, 891 rows and 12 columns.
+- The ***train.csv*** file is the training dataset, we shall refer to it as `train_data`.
+- `train_data` contains, 891 rows and 12 columns.
 - The target variable is `Survived`, while the other variables are features.
   
 Below shows a snapshot of the Data Dictionary, explain what each variables are:
 
 ![data_dictionary](https://github.com/justin-97/Titanic-Project/blob/main/Images/datadictionary.jpg)
 
+Here's a preview of the first 10 rows of the training dataset:
+
+![train dataset head](https://github.com/justin-97/Titanic-Project/blob/main/Images/traindatasethead.jpg)
+
+## Exploratory Data Analysis
+At a first glance of `train_data`, there appears to be missing values in 3 features:
+ 1) `Age`: 177 missing values.
+ 2) `Cabin`: 687 missing values.
+ 3) `Embarked`: 2 missing values.
+
+A potential way we could deal with this missing values would be:
+ 1) `Age`: Replace the missing values with the aggregated mean ages of the total passengers.
+ 2) `Cabin`: Split `Cabin` into categorial values, group the missing values to an assigned term e.g. *'X'*
+ 3) `Embarked`: Considering we are using Ensemble Learning models (which are robust to outliers & missing values), we could just leave the missing values. 2 out of 891 is considered pretty insignificant.
+
+#### 1) Age
+Digging deeper into the `Age` variable, a boxplot was used to illustrate the distribution of ages of all passengers.
 
